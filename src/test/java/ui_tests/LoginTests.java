@@ -21,7 +21,8 @@ public class LoginTests extends AppManager {
         HomePage homePage = new HomePage(getDriver());
         homePage.clickBtnLogin();
         LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru", "Family123!"));
+        loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
+                "Family123!"));
         loginPage.clickBtnLoginForm();
     }
 
