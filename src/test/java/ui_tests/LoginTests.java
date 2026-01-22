@@ -2,7 +2,9 @@ package ui_tests;
 
 import dto.User;
 import manager.AppManager;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 
@@ -14,6 +16,9 @@ public class LoginTests extends AppManager {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistration("family@mail.ru", "Family123!");
         loginPage.clickBtnLoginForm();
+        ContactsPage contactsPage = new ContactsPage(getDriver());
+        Assert.assertTrue(contactsPage.isBtnSignOutDisplayed());
+
     }
 
     @Test
@@ -24,6 +29,8 @@ public class LoginTests extends AppManager {
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123!"));
         loginPage.clickBtnLoginForm();
+        ContactsPage contactsPage = new ContactsPage(getDriver());
+        Assert.assertTrue(contactsPage.isBtnAddDisplayed());
     }
 
 }
