@@ -12,5 +12,7 @@ public abstract class BasePage {
     public boolean isElementDisplayed(WebElement element){
         return element.isDisplayed();
     }
-
+public boolean isTextInElement(WebElement element, String text){
+        return element.getText().contains(text);
+}
 }

@@ -1,12 +1,18 @@
 package pages;
 
 import dto.User;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
+import static pages.BasePage.driver;
 import static pages.BasePage.setDriver;
 
 public class LoginPage {
@@ -25,6 +31,7 @@ public class LoginPage {
     @FindBy(xpath = "//button[@name='registration']")
     WebElement btnRegistrationForm;
 
+
     public void typeLoginRegistration(String email, String password) {
         fieldEmail.sendKeys(email);
         fieldPassword.sendKeys(password);
@@ -41,5 +48,13 @@ public class LoginPage {
 
     public void clickBtnRegistration() {
         btnRegistrationForm.click();
+    }
+
+    public String closeAlertReturnText(){
+        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.alertIsPresent());
+        String text = alert.getText();
+        alert.accept();
+        return text;
     }
 }

@@ -18,13 +18,22 @@ public class ContactsPage extends BasePage {
     WebElement btnSignOut;
     @FindBy(xpath = "//a[@href = '/add']")
     WebElement btnAdd;
+    @FindBy(xpath = "//h1[text()=' No Contacts here!']")
+    WebElement blankAccountMessage;
 
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
     }
 
-    public boolean isBtnAddDisplayed(){
+    public boolean isBtnAddDisplayed() {
         return isElementDisplayed(btnAdd);
     }
 
+    public boolean isBtnSignOutDisplayed2(String text) {
+        return isTextInElement(btnSignOut, text);
+    }
+
+    public boolean isBlankAccountMessageDisplayed(String text) {
+        return isTextInElement(blankAccountMessage, text);
+    }
 }
