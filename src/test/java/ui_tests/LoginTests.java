@@ -3,17 +3,23 @@ package ui_tests;
 import dto.User;
 import manager.AppManager;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 
 public class LoginTests extends AppManager {
+    LoginPage loginPage;
+
+    @BeforeMethod
+    public void goToRegistrationPage() {
+        new HomePage(getDriver()).clickBtnLogin();
+        loginPage = new LoginPage(getDriver());
+    }
+
     @Test
     public void loginPositiveTest() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistration("family@mail.ru", "Family123!");
         loginPage.clickBtnLoginForm();
         ContactsPage contactsPage = new ContactsPage(getDriver());
@@ -23,9 +29,6 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginPositiveTestWithUserDto() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123!"));
         loginPage.clickBtnLoginForm();
@@ -35,11 +38,26 @@ public class LoginTests extends AppManager {
 
     @Test
     public void LoginNegativeTestWithWrongEmail() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistrationFormUserDto(new User("familymail.ru",
                 "Family123!"));
+        loginPage.clickBtnLoginForm();
+        Assert.assertEquals(loginPage.closeAlertReturnText(),
+                "Wrong email or password");
+    }
+
+    @Test
+    public void LoginNegativeTestNoEmail() {
+        loginPage.typeLoginRegistrationFormUserDto(new User("",
+                "Family123!"));
+        loginPage.clickBtnLoginForm();
+        Assert.assertEquals(loginPage.closeAlertReturnText(),
+                "Wrong email or password");
+    }
+
+    @Test
+    public void LoginNegativeTestWithWrongPassword() {
+        loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
+                "Family123"));
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(),
                 "Wrong email or password");

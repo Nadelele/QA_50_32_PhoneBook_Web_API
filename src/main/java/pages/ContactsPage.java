@@ -32,8 +32,8 @@ public class ContactsPage extends BasePage {
     public boolean isBtnSignOutDisplayed2(String text) {
         return isTextInElement(btnSignOut, text);
     }
-
     public boolean isBlankAccountMessageDisplayed(String text) {
         return isTextInElement(blankAccountMessage, text);
     }
+    public void clickBtnSignOut(){btnSignOut.click();}
 }
