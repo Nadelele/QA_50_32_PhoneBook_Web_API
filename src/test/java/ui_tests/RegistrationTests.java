@@ -9,7 +9,7 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import java.util.Random;
-import static utils.UserFactory.positiveUser;
+import static utils.UserFactory.*;
 
 public class RegistrationTests extends AppManager {
     LoginPage loginPage;

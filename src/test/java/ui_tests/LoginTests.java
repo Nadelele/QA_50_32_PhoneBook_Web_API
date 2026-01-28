@@ -37,7 +37,7 @@ public class LoginTests extends AppManager {
     }
 
     @Test
-    public void LoginNegativeTestWithWrongEmail() {
+    public void LoginNegativeTest_Email_WrongEmail() {
         loginPage.typeLoginRegistrationFormUserDto(new User("familymail.ru",
                 "Family123!"));
         loginPage.clickBtnLoginForm();
@@ -46,7 +46,7 @@ public class LoginTests extends AppManager {
     }
 
     @Test
-    public void LoginNegativeTestNoEmail() {
+    public void LoginNegativeTest_Email_EmptyEmail() {
         loginPage.typeLoginRegistrationFormUserDto(new User("",
                 "Family123!"));
         loginPage.clickBtnLoginForm();
@@ -55,7 +55,7 @@ public class LoginTests extends AppManager {
     }
 
     @Test
-    public void LoginNegativeTestWithWrongPassword() {
+    public void LoginNegativeTest_Password_WrongPassword() {
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123"));
         loginPage.clickBtnLoginForm();
