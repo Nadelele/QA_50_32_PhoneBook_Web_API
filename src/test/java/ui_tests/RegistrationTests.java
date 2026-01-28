@@ -81,7 +81,7 @@ public class RegistrationTests extends AppManager {
                 "User already exist");
     }
     @Test
-    public void registrationPositiveTest_Password_EmptyPassword(){
+    public void registrationNegativeTest_Password_EmptyPassword(){
         User user = positiveUser();
         user.setPassword("");
         loginPage.typeLoginRegistrationFormUserDto(user);
@@ -89,7 +89,7 @@ public class RegistrationTests extends AppManager {
         Assert.assertTrue(loginPage.closeAlertReturnText().contains("Wrong email or password"));
     }
     @Test
-    public void registrationPositiveTest_Password_WOSpecialSymbol(){
+    public void registrationNegativeTest_Password_WOSpecialSymbol(){
         User user = positiveUser();
         user.setPassword("QWEasd123");
         loginPage.typeLoginRegistrationFormUserDto(user);
