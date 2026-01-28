@@ -31,7 +31,7 @@ public class RegistrationTests extends AppManager {
     }
 
     @Test
-    public void registrationPositiveTestWithFaker(){
+    public void registrationPositiveTest_WithFaker(){
         User user = positiveUser();
         loginPage.typeLoginRegistrationFormUserDto(user);
         loginPage.clickBtnRegistration();
@@ -41,16 +41,18 @@ public class RegistrationTests extends AppManager {
 
     }
     @Test
-    public void registrationNegativeTestEmailFormatWithoutDomain(){
-        User user = new User("test@tut", "QWEasd123!");
+    public void registrationNegativeTest_Email_WithoutDomain(){
+        User user = positiveUser();
+        user.setUsername("test@tutby");
         loginPage.typeLoginRegistrationFormUserDto(user);
         loginPage.clickBtnRegistration();
         Assert.assertTrue(loginPage.closeAlertReturnText()
                 .contains("minimum 2 symbols after last dot"));
     }
     @Test
-    public void registrationNegativeTestEmailFormatWithoutStrudel(){
-        User user = new User("testtut.by", "QWEasd123!");
+    public void registrationNegativeTest_Email_WithoutStrudel(){
+        User user = positiveUser();
+        user.setUsername("testtut.by");
         loginPage.typeLoginRegistrationFormUserDto(user);
         loginPage.clickBtnRegistration();
         Assert.assertTrue(loginPage.closeAlertReturnText()
@@ -58,8 +60,9 @@ public class RegistrationTests extends AppManager {
     }
 
     @Test
-    public void registrationNegativeTestEmailFormatWithoutEmail(){
-        User user = new User("", "QWEasd123!");
+    public void registrationNegativeTest_Email_EmptyEmail(){
+        User user = positiveUser();
+       user.setUsername("");
         loginPage.typeLoginRegistrationFormUserDto(user);
         loginPage.clickBtnRegistration();
         Assert.assertEquals(loginPage.closeAlertReturnText(),
@@ -67,7 +70,7 @@ public class RegistrationTests extends AppManager {
     }
 
     @Test
-    public void registrationNegativeTestUserAlreadyExists(){
+    public void registrationNegativeTest_Email_UserAlreadyExists(){
         User user = positiveUser();
         loginPage.typeLoginRegistrationFormUserDto(user);
         loginPage.clickBtnRegistration();
@@ -76,5 +79,21 @@ public class RegistrationTests extends AppManager {
         loginPage.clickBtnRegistration();
         Assert.assertEquals(loginPage.closeAlertReturnText(),
                 "User already exist");
+    }
+    @Test
+    public void registrationPositiveTest_Password_EmptyPassword(){
+        User user = positiveUser();
+        user.setPassword("");
+        loginPage.typeLoginRegistrationFormUserDto(user);
+        loginPage.clickBtnRegistration();
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Wrong email or password"));
+    }
+    @Test
+    public void registrationPositiveTest_Password_WOSpecialSymbol(){
+        User user = positiveUser();
+        user.setPassword("QWEasd123");
+        loginPage.typeLoginRegistrationFormUserDto(user);
+        loginPage.clickBtnRegistration();
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Wrong email or password"));
     }
 }
