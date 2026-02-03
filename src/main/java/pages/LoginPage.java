@@ -15,7 +15,7 @@ import java.time.Duration;
 import static pages.BasePage.driver;
 import static pages.BasePage.setDriver;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
     public LoginPage(WebDriver driver) {
         setDriver(driver);
         driver.get("https://telranedu.web.app/login");

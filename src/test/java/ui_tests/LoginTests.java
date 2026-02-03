@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
+import utils.RetryAnalyzer;
 
 public class LoginTests extends AppManager {
     LoginPage loginPage;
@@ -27,7 +28,7 @@ public class LoginTests extends AppManager {
 
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void loginPositiveTestWithUserDto() {
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123!"));
