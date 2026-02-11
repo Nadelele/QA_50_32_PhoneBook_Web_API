@@ -12,8 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static pages.BasePage.driver;
-import static pages.BasePage.setDriver;
 
 public class LoginPage extends BasePage{
     public LoginPage(WebDriver driver) {

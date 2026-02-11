@@ -9,6 +9,7 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyzer;
+import static utils.PropertiesReader.*;
 
 public class LoginTests extends AppManager {
     LoginPage loginPage;
@@ -21,7 +22,10 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginPositiveTest() {
-        loginPage.typeLoginRegistration("family@mail.ru", "Family123!");
+        //loginPage.typeLoginRegistration("family@mail.ru", "Family123!");
+        loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
+
         loginPage.clickBtnLoginForm();
         ContactsPage contactsPage = new ContactsPage(getDriver());
         Assert.assertTrue(contactsPage.isBtnSignOutDisplayed());

@@ -1,11 +1,12 @@
 package ui_tests;
 
+import data_providers.ContactDataProvider;
 import dto.Contact;
-import dto.User;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.ContactFactory.*;
 import utils.HeaderMenuItem;
@@ -14,6 +15,7 @@ import static pages.BasePage.*;
 import static utils.ContactFactory.*;
 
 public class AddNewContactTests extends AppManager {
+    SoftAssert softAssert = new SoftAssert();
     HomePage homePage;
     LoginPage loginPage;
     ContactsPage contactsPage;
@@ -36,19 +38,39 @@ public class AddNewContactTests extends AppManager {
     public void addNewContactPositiveTest() {
         addPage.typeContactForm(positiveContact());
         int countOfContactsAfterAdd = contactsPage.getCountOfContacts();
-        Assert.assertEquals(countOfContacts+1, countOfContactsAfterAdd);
+        Assert.assertEquals(countOfContacts + 1, countOfContactsAfterAdd);
+    }
+
+    @Test(dataProvider = "dataProviderFromFile", dataProviderClass = ContactDataProvider.class)
+    public void addNewContactPositiveTest_WithDataProvider(Contact contact){
+        addPage.typeContactForm(contact);
+        int countOfContactsAfterAdd = contactsPage.getCountOfContacts();
+        Assert.assertEquals(countOfContacts + 1, countOfContactsAfterAdd);
     }
 
     @Test
-    public void checkLastElement(){
+    public void checkLastElement() {
         addPage.typeContactForm(positiveContact());
         System.out.println(contactsPage.lastElement().getText());
     }
 
     @Test
-    public void isContactAdded(){
+    public void isContactAdded() {
         Contact contact = positiveContact();
         addPage.typeContactForm(contact);
         Assert.assertTrue(contactsPage.isContactPresent(contact));
+    }
+
+    @Test
+    public void addNewContactPositiveTest_ScrollToLastElement() {
+        Contact contact = positiveContact();
+        addPage.typeContactForm(contact);
+        contactsPage.scrollToLastContact();
+        contactsPage.clickLastContact();
+        String text = contactsPage.getTextInContact();
+        System.out.println(text);
+        softAssert.assertTrue(text.contains(contact.getName()), "softAssert: contact name");
+        softAssert.assertTrue(text.contains(contact.getEmail()), "softAssert: contact email");
+        softAssert.assertAll();
     }
 }
