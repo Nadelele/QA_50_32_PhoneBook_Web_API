@@ -35,17 +35,45 @@ public class AddNewContactTests extends AppManager {
     }
 
     @Test
-    public void addNewContactPositiveTest() {
+    public void addNewContact_PositiveTest() {
         addPage.typeContactForm(positiveContact());
         int countOfContactsAfterAdd = contactsPage.getCountOfContacts();
         Assert.assertEquals(countOfContacts + 1, countOfContactsAfterAdd);
     }
 
-    @Test(dataProvider = "dataProviderFromFile", dataProviderClass = ContactDataProvider.class)
-    public void addNewContactPositiveTest_WithDataProvider(Contact contact){
+    @Test(dataProvider = "dataProviderFromFile_Positive", dataProviderClass = ContactDataProvider.class)
+    public void addNewContact_PositiveTest_WithDataProvider(Contact contact){
         addPage.typeContactForm(contact);
         int countOfContactsAfterAdd = contactsPage.getCountOfContacts();
         Assert.assertEquals(countOfContacts + 1, countOfContactsAfterAdd);
+    }
+
+    @Test(dataProvider = "dataProviderFromFile_Negative_RequiredTextFields_Empty", dataProviderClass = ContactDataProvider.class)
+    public void addNewContact_NegativeTest_RequiredTextFields_Empty(Contact contact){
+        addPage.typeContactForm(contact);
+        Assert.assertEquals(contactsPage.closeAlertReturnText(),
+                "Required fields should not be empty");
+    }
+
+    @Test(dataProvider = "dataProviderFromFile_Negative_RequiredTextFields_Security", dataProviderClass = ContactDataProvider.class)
+    public void addNewContact_NegativeTest_RequiredTextFields_Security(Contact contact){
+        addPage.typeContactForm(contact);
+        Assert.assertEquals(contactsPage.closeAlertReturnText(),
+                "Fields should not contain the following symbols: /, <, > ");
+    }
+
+    @Test(dataProvider = "dataProviderFromFile_Negative_PhoneNumber", dataProviderClass = ContactDataProvider.class)
+    public void addNewContact_NegativeTest_PhoneNumber(Contact contact){
+        addPage.typeContactForm(contact);
+        Assert.assertEquals(contactsPage.closeAlertReturnText(),
+                " Phone not valid: Phone number must contain only digits! And length min 10, max 15!");
+    }
+
+    @Test(dataProvider = "dataProviderFromFile_Negative_Email", dataProviderClass = ContactDataProvider.class)
+    public void addNewContact_NegativeTest_Email(Contact contact){
+        addPage.typeContactForm(contact);
+        Assert.assertEquals(contactsPage.closeAlertReturnText(),
+                "Email not valid: must be a well-formed email address");
     }
 
     @Test

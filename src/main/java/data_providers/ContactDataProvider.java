@@ -12,10 +12,35 @@ import java.util.List;
 
 public class ContactDataProvider {
     @DataProvider
-    public Iterator<Contact> dataProviderFromFile() {
+    public Iterator<Contact> dataProviderFromFile_Positive() {
+        return dataProviderFromFile("src/test/resources/data_csv/data_contacts.csv");
+    }
+
+    @DataProvider
+    public Iterator<Contact> dataProviderFromFile_Negative_RequiredTextFields_Empty() {
+        return dataProviderFromFile("src/test/resources/data_csv/required_text_fields_negative_data.csv");
+    }
+
+    @DataProvider
+    public Iterator<Contact> dataProviderFromFile_Negative_RequiredTextFields_Security() {
+        return dataProviderFromFile("src/test/resources/data_csv/regular_text_fields_negative_security_data.csv");
+    }
+
+    @DataProvider
+    public Iterator<Contact> dataProviderFromFile_Negative_PhoneNumber() {
+        return dataProviderFromFile("src/test/resources/data_csv/phone_negative_data.csv");
+    }
+
+    @DataProvider
+    public Iterator<Contact> dataProviderFromFile_Negative_Email() {
+        return dataProviderFromFile("src/test/resources/data_csv/email_negative_data.csv");
+    }
+
+
+    public Iterator<Contact> dataProviderFromFile(String filename) {
         List<Contact> contactList = new ArrayList<>();
         try (BufferedReader bufferReader = new BufferedReader(new FileReader
-                ("src/test/resources/data_csv/data_contacts.csv"))) {
+                (filename))) {
             String line = bufferReader.readLine();
             while (line != null) {
                 String[] splitArray = line.split(",");
