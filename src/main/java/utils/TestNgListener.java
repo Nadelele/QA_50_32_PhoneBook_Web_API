@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Listeners;
+
 
 public class TestNgListener implements ITestListener {
     Logger logger = LoggerFactory.getLogger(ITestListener.class);

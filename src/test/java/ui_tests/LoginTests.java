@@ -4,16 +4,16 @@ import dto.User;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyzer;
-
 import java.lang.reflect.Method;
-
 import static utils.PropertiesReader.*;
-import static utils.UserFactory.positiveUser;
+import utils.TestNgListener;
+@Listeners(TestNgListener.class)
 
 public class LoginTests extends AppManager {
     LoginPage loginPage;
@@ -39,7 +39,6 @@ public class LoginTests extends AppManager {
     public void loginPositiveTestWithUserDto(Method method) {
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123!"));
-        logger.info("Start " + method.getName());
         loginPage.clickBtnLoginForm();
         ContactsPage contactsPage = new ContactsPage(getDriver());
         Assert.assertTrue(contactsPage.isBtnAddDisplayed());
