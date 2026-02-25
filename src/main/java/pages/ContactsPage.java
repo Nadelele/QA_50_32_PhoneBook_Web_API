@@ -21,10 +21,16 @@ public class ContactsPage extends BasePage {
     WebElement btnSignOut;
     @FindBy(xpath = "//a[@href = '/add']")
     WebElement btnAdd;
+    @FindBy(xpath = "//button[text()='Remove']")
+    WebElement btnRemove;
+    @FindBy(xpath = "//button[text()='Edit']")
+    WebElement btnEdit;
     @FindBy(xpath = "//h1[text()=' No Contacts here!']")
     WebElement blankAccountMessage;
     @FindBy(className = "contact-item_card__2SOIM")
     List<WebElement> contactsList;
+    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][1]")
+    WebElement firstContact;
     @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]")
     WebElement lastContact;
     @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']/div")
@@ -32,9 +38,10 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//div[@class='contact-item-detailed_card__50dTS']")
     WebElement contactDetailedCard;
 
-    public String getTextInContact(){
+    public String getTextInContact() {
         return contactDetailedCard.getText();
     }
+
     public int getCountOfContacts() {
         return contactsList.size();
     }
@@ -70,6 +77,10 @@ public class ContactsPage extends BasePage {
         actions.scrollFromOrigin(scrollOrigin, 0, deltaY).perform();
     }
 
+    public void clickFirstContact() {
+        firstContact.click();
+    }
+
     public void clickLastContact() {
         lastContact.click();
     }
@@ -92,5 +103,12 @@ public class ContactsPage extends BasePage {
 
     public void clickBtnSignOut() {
         btnSignOut.click();
+    }
+
+    public void clickBtnRemove() {
+        btnRemove.click();
+    }
+    public void clickBtnEdit() {
+        btnEdit.click();
     }
 }
