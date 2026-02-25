@@ -9,7 +9,11 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyzer;
+
+import java.lang.reflect.Method;
+
 import static utils.PropertiesReader.*;
+import static utils.UserFactory.positiveUser;
 
 public class LoginTests extends AppManager {
     LoginPage loginPage;
@@ -22,7 +26,6 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginPositiveTest() {
-        //loginPage.typeLoginRegistration("family@mail.ru", "Family123!");
         loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
                 getProperty("base.properties", "password"));
 
@@ -33,9 +36,10 @@ public class LoginTests extends AppManager {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void loginPositiveTestWithUserDto() {
+    public void loginPositiveTestWithUserDto(Method method) {
         loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
                 "Family123!"));
+        logger.info("Start " + method.getName());
         loginPage.clickBtnLoginForm();
         ContactsPage contactsPage = new ContactsPage(getDriver());
         Assert.assertTrue(contactsPage.isBtnAddDisplayed());
