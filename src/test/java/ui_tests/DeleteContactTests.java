@@ -13,6 +13,7 @@ import utils.HeaderMenuItem;
 
 import static pages.BasePage.clickButtonHeader;
 import static utils.ContactFactory.positiveContact;
+import static utils.PropertiesReader.getProperty;
 
 public class DeleteContactTests extends AppManager {
     HomePage homePage;
@@ -25,8 +26,8 @@ public class DeleteContactTests extends AppManager {
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
-        loginPage.typeLoginRegistration("family@mail.ru",
-                "Family123!");
+        loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
         loginPage.clickBtnLoginForm();
         contactsPage = new ContactsPage(getDriver());
         if(contactsPage.getCountOfContacts() == 0) {
@@ -36,7 +37,7 @@ public class DeleteContactTests extends AppManager {
     }
 
     @Test
-    public void deleteFirstContact() {
+    public void deleteFirstContactPositive() {
         contactsPage.clickFirstContact();
         firstContactText = contactsPage.getTextInContact();
         System.out.println(firstContactText);

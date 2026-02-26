@@ -27,12 +27,18 @@ public class EditPage extends BasePage{
     @FindBy(xpath = "//button[text()='Save']")
     WebElement btnSave;
 
-    public void editContactForm(Contact contact){
+    public void typeContactEditForm(Contact contact){
+        inputName.clear();
         inputName.sendKeys(contact.getName());
+        inputLastName.clear();
         inputLastName.sendKeys(contact.getLastName());
+        inputPhone.clear();
         inputPhone.sendKeys(contact.getPhone());
+        inputEmail.clear();
         inputEmail.sendKeys(contact.getEmail());
+        inputAddress.clear();
         inputAddress.sendKeys(contact.getAddress());
+        inputDescription.clear();
         inputDescription.sendKeys(contact.getDescription());
         btnSave.click();
     }

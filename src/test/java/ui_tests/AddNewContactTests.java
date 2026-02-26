@@ -13,6 +13,7 @@ import utils.HeaderMenuItem;
 
 import static pages.BasePage.*;
 import static utils.ContactFactory.*;
+import static utils.PropertiesReader.getProperty;
 
 public class AddNewContactTests extends AppManager {
     SoftAssert softAssert = new SoftAssert();
@@ -26,8 +27,8 @@ public class AddNewContactTests extends AppManager {
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
-        loginPage.typeLoginRegistration("family@mail.ru",
-                "Family123!");
+        loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
         loginPage.clickBtnLoginForm();
         contactsPage = new ContactsPage(getDriver());
         countOfContacts = contactsPage.getCountOfContacts();

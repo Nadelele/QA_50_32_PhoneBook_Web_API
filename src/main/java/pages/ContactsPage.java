@@ -1,6 +1,8 @@
 package pages;
 
 import dto.Contact;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,7 +10,10 @@ import org.openqa.selenium.interactions.WheelInput;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class ContactsPage extends BasePage {
@@ -50,13 +55,26 @@ public class ContactsPage extends BasePage {
         return contactsList.get(contactsList.size() - 1);
     }
 
-    public boolean isContactPresent(Contact contact) {
+    public boolean isContactPresentOld(Contact contact) {
+
         for (WebElement element : contactsList) {
             if (element.getText().contains(contact.getName())
                     && element.getText().contains(contact.getPhone()))
                 return true;
         }
         return false;
+    }
+    public boolean isContactPresent(Contact contact) {
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.visibilityOfElementLocated(
+                            By.xpath("//div[./h2[contains(text(),'" + contact.getName() + "')] " +
+                                    "and ./h3[contains(text(),'" + contact.getPhone() + "')]]")
+                    ))
+                    .isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     public void scrollToLastContact_2() {

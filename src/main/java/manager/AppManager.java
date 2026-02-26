@@ -33,7 +33,7 @@ public WebDriver getDriver(){
                 .decorate(driver);
     }
 
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void tearDown() {
         logger.info("Stop testing " + LocalDate.now() +
                 " : " + LocalTime.now());

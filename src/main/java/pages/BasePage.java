@@ -1,5 +1,6 @@
 package pages;
 
+import dto.Contact;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -59,4 +60,5 @@ public abstract class BasePage {
         alert.accept();
         return text;
     }
+
 }

@@ -1,6 +1,8 @@
 package ui_tests;
 
+import dto.Contact;
 import manager.AppManager;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.*;
@@ -15,6 +17,8 @@ public class EditContactTests extends AppManager {
     LoginPage loginPage;
     ContactsPage contactsPage;
     AddPage addPage;
+    EditPage editPage;
+
 
     @BeforeMethod
     public void login() {
@@ -30,12 +34,15 @@ public class EditContactTests extends AppManager {
         }
 
     }
+
     @Test
-    public void editContact() {
+    public void editContactPositive() {
         contactsPage.clickFirstContact();
         contactsPage.clickBtnEdit();
-
-
+        editPage = new EditPage(getDriver());
+        Contact contact = positiveContact();
+        editPage.typeContactEditForm(contact);
+        Assert.assertTrue(contactsPage.isContactPresent(contact));
     }
 
 }
