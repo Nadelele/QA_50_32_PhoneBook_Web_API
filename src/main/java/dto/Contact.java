@@ -16,5 +16,16 @@ public class Contact {
     private String address;
     private String description;
 
-
+    public Contact(String data) {
+        String[] textData = data.split("\\R");
+        String[] nameParts = textData[0].split("\\s", 2);
+        this.name = nameParts[0];
+        this.lastName = nameParts[1];
+        this.email = textData[2];
+        this.phone = textData[1];
+        this.address = textData[3];
+        this.description = textData[4];
+    }
 }
+
+

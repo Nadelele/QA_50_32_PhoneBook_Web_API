@@ -8,7 +8,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.*;
-import utils.ContactFactory.*;
 import utils.HeaderMenuItem;
 
 import static pages.BasePage.*;
@@ -87,7 +86,7 @@ public class AddNewContactTests extends AppManager {
     public void isContactAdded() {
         Contact contact = positiveContact();
         addPage.typeContactForm(contact);
-        Assert.assertTrue(contactsPage.isContactPresent(contact));
+        Assert.assertTrue(contactsPage.isContactPresentInList(contact));
     }
 
     @Test

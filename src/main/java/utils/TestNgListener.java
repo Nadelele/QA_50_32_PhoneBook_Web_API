@@ -1,5 +1,8 @@
 package utils;
 
+import manager.AppManager;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
@@ -10,6 +13,7 @@ import org.testng.annotations.Listeners;
 
 public class TestNgListener implements ITestListener {
     Logger logger = LoggerFactory.getLogger(ITestListener.class);
+    private WebDriver driver;
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -27,6 +31,8 @@ public class TestNgListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
         logger.error(result.getTestClass() + " test failed --> " + result.getName());
+        this.driver = ((AppManager)result.getInstance()).getDriver();
+        TakeScreenShot.takeScreenShot((TakesScreenshot)driver);
     }
 
     @Override

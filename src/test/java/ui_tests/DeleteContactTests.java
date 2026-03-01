@@ -45,7 +45,7 @@ public class DeleteContactTests extends AppManager {
         Contact contact = positiveContact();
         contact.setName(firstContactText.split("\\R")[0]);
         contact.setPhone(firstContactText.split("\\R")[1]);
-        Assert.assertFalse(contactsPage.isContactPresent(contact));
+        Assert.assertFalse(contactsPage.isContactPresentInList(contact));
 //        Assert.assertEquals(contactsPage.closeAlertReturnText(),
 //                 "Do you want to delete this contact?"); - should be alert check first,
 //      confirmation button click and then check of removed contact presence.

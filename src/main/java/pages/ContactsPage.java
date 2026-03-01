@@ -64,7 +64,9 @@ public class ContactsPage extends BasePage {
         }
         return false;
     }
-    public boolean isContactPresent(Contact contact) {
+
+    public boolean isContactPresentInList(Contact contact) {
+
         try {
             return new WebDriverWait(driver, Duration.ofSeconds(10))
                     .until(ExpectedConditions.visibilityOfElementLocated(
@@ -103,6 +105,12 @@ public class ContactsPage extends BasePage {
         lastContact.click();
     }
 
+    public void clickEditedContact(Contact contact) {
+        driver.findElement(By
+                .xpath("//div[./h2[contains(text(),'" + contact.getName() + "')] " +
+                        "and ./h3[contains(text(),'" + contact.getPhone() + "')]]")).click();
+    }
+
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
     }
@@ -126,6 +134,7 @@ public class ContactsPage extends BasePage {
     public void clickBtnRemove() {
         btnRemove.click();
     }
+
     public void clickBtnEdit() {
         btnEdit.click();
     }
