@@ -5,6 +5,7 @@ import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.AddPage;
 import pages.ContactsPage;
 import pages.HomePage;
@@ -21,6 +22,7 @@ public class DeleteContactTests extends AppManager {
     ContactsPage contactsPage;
     AddPage addPage;
     String firstContactText;
+    SoftAssert softAssert = new SoftAssert();
 
     @BeforeMethod
     public void login() {
@@ -45,10 +47,11 @@ public class DeleteContactTests extends AppManager {
         Contact contact = positiveContact();
         contact.setName(firstContactText.split("\\R")[0]);
         contact.setPhone(firstContactText.split("\\R")[1]);
-        Assert.assertFalse(contactsPage.isContactPresentInList(contact));
-//        Assert.assertEquals(contactsPage.closeAlertReturnText(),
+        softAssert.assertFalse(contactsPage.isContactPresentInList(contact));
+//        softAssert.assertEquals(contactsPage.closeAlertReturnText(),
 //                 "Do you want to delete this contact?"); - should be alert check first,
 //      confirmation button click and then check of removed contact presence.
+        softAssert.assertAll();
     }
 
 }
