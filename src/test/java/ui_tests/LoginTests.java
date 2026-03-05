@@ -10,7 +10,6 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyzer;
-import java.lang.reflect.Method;
 import static utils.PropertiesReader.*;
 import utils.TestNgListener;
 @Listeners(TestNgListener.class)
@@ -36,9 +35,9 @@ public class LoginTests extends AppManager {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void loginPositiveTestWithUserDto(Method method) {
-        loginPage.typeLoginRegistrationFormUserDto(new User("family@mail.ru",
-                "Family123!"));
+    public void loginPositiveTestWithUserDto() {
+        loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
+                getProperty("base.properties", "password"));
         loginPage.clickBtnLoginForm();
         ContactsPage contactsPage = new ContactsPage(getDriver());
         Assert.assertTrue(contactsPage.isBtnAddDisplayed());
