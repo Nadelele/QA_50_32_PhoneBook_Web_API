@@ -19,9 +19,45 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
     implementation 'ch.qos.logback:logback-classic:1.5.18'
-
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }
 
 test {
     useTestNG()
+}
+task smoketests(type: Test) {
+    useTestNG({
+        suites 'src/main/resources/smoketests.xml'
+    })
+}
+task smoke_contact_tests(type: Test) {
+    useTestNG({
+        suites 'src/main/resources/smoke_contact_tests.xml'
+    })
+}
+task negativetests(type: Test) {
+    useTestNG({
+        suites 'src/main/resources/negativetests.xml'
+    })
+}
+task different_tests(type: Test) {
+    useTestNG() {
+        def suite = System.getProperty('suite', 'smoketests')
+        if (suite.equalsIgnoreCase('smoke_contact_tests')) {
+            suites 'src/main/resources/smoke_contact_tests.xml'
+        } else if (suite.equalsIgnoreCase('negativetests')) {
+            suites 'src/main/resources/negativetests.xml'
+        } else {
+            suites 'src/main/resources/smoketests.xml'
+        }
+    }
+}
+
+task browser_tests(type: Test) {
+    useTestNG() {
+        if (project.hasProperty('browser'))
+            systemProperty 'browser', "${browser}"
+        suites 'src/main/resources/smoketests.xml'
+    }
 }

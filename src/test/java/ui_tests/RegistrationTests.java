@@ -13,7 +13,7 @@ import static utils.UserFactory.*;
 
 public class RegistrationTests extends AppManager {
     LoginPage loginPage;
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToRegistrationPage(){
         new HomePage(getDriver()).clickBtnLogin();
         loginPage = new LoginPage(getDriver());
@@ -30,7 +30,7 @@ public class RegistrationTests extends AppManager {
 
     }
 
-    @Test
+    @Test(groups = {"smoke", "user"})
     public void registrationPositiveTest_WithFaker(){
         User user = positiveUser();
         loginPage.typeLoginRegistrationFormUserDto(user);
@@ -40,7 +40,7 @@ public class RegistrationTests extends AppManager {
         System.out.println(user);
 
     }
-    @Test
+    @Test(groups = "negative")
     public void registrationNegativeTest_Email_WithoutDomain(){
         User user = positiveUser();
         user.setUsername("test@tutby");

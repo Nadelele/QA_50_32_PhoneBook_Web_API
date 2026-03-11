@@ -1,0 +1,5 @@
+.\gradlew clean smoketests
+
+.\gradlew clean different_tests -Dsuite=negativetests - передача переменной  в таск
+
+.\gradlew clean browser_tests -Pbrowser=firefox

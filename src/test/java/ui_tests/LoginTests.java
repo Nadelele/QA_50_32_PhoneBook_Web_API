@@ -17,13 +17,13 @@ import utils.TestNgListener;
 public class LoginTests extends AppManager {
     LoginPage loginPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToRegistrationPage() {
         new HomePage(getDriver()).clickBtnLogin();
         loginPage = new LoginPage(getDriver());
     }
 
-    @Test
+    @Test(groups = {"smoke", "user"})
     public void loginPositiveTest() {
         loginPage.typeLoginRegistration(getProperty("base.properties", "login"),
                 getProperty("base.properties", "password"));
@@ -43,7 +43,7 @@ public class LoginTests extends AppManager {
         Assert.assertTrue(contactsPage.isBtnAddDisplayed());
     }
 
-    @Test
+    @Test(groups = "negative")
     public void LoginNegativeTest_Email_WrongEmail() {
         loginPage.typeLoginRegistrationFormUserDto(new User("familymail.ru",
                 "Family123!"));

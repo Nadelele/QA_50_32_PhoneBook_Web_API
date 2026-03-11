@@ -24,7 +24,7 @@ public class DeleteContactTests extends AppManager {
     String firstContactText;
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
@@ -38,7 +38,7 @@ public class DeleteContactTests extends AppManager {
         }
     }
 
-    @Test
+    @Test(groups = {"smoke", "contact"})
     public void deleteFirstContactPositive() {
         contactsPage.clickFirstContact();
         firstContactText = contactsPage.getTextInContact();

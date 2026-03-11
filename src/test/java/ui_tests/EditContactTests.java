@@ -21,7 +21,7 @@ public class EditContactTests extends AppManager {
     EditPage editPage;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
@@ -36,7 +36,7 @@ public class EditContactTests extends AppManager {
 
     }
 
-    @Test
+    @Test(groups = {"smoke", "contact"})
     public void editContactPositive() {
         contactsPage.clickFirstContact();
         contactsPage.clickBtnEdit();
