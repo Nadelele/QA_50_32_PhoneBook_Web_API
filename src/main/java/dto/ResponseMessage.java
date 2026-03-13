@@ -5,6 +5,6 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 
-public class Token {
-    private String token;
+public class ResponseMessage {
+    public String message;
 }
