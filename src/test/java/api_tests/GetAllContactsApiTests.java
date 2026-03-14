@@ -15,7 +15,6 @@ import java.io.IOException;
 public class GetAllContactsApiTests implements BaseApi, ILogin {
     Token token;
     SoftAssert softAssert = new SoftAssert();
-    ;
 
     @BeforeClass
     public void login() {
@@ -26,13 +25,13 @@ public class GetAllContactsApiTests implements BaseApi, ILogin {
     public void getAllContactsPositiveApiTest() {
         Response response = getResponse(GET_ALL_CONTACTS_URL, "GET", null, token);
         Assert.assertEquals(response.code(), 200);
-        System.out.println(response.message());
     }
 
     @Test
     public void getAllContactsNegativeApiTest_WrongToken() {
-        try (Response response = getResponse(GET_ALL_CONTACTS_URL, "GET", null, new Token("fdfdf"))) {
-            softAssert.assertEquals(response.code(), 401, "wrong status code");
+        Response response = getResponse(GET_ALL_CONTACTS_URL, "GET", null, new Token("fdfdf"));
+        softAssert.assertEquals(response.code(), 401, "wrong status code");
+        try {
             ErrorMessage errorMessage = GSON.fromJson(response.body().string(), ErrorMessage.class);
             softAssert.assertEquals(errorMessage.getError(), "Unauthorized", "wrong response message");
             softAssert.assertAll();
