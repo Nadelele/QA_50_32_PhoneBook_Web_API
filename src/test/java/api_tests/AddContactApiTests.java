@@ -1,40 +1,27 @@
 package api_tests;
 
-import com.google.gson.JsonParser;
 import dto.Contact;
 import dto.ErrorMessage;
 import dto.Token;
-import dto.User;
 import okhttp3.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.BaseApi;
+import utils.ILogin;
 
-import static utils.PropertiesReader.*;
 import static utils.ContactFactory.*;
 
-import java.io.IOException;
 
-public class AddContactApiTests implements BaseApi {
+public class AddContactApiTests implements BaseApi, ILogin {
     Token token;
     SoftAssert softAssert = new SoftAssert();
     ErrorMessage errorMessage;
 
     @BeforeClass
     public void login() {
-
-        User user = new User(getProperty("base.properties", "login"),
-                getProperty("base.properties", "password"));
-        Response response = getResponse(LOGIN_URL, "POST", user, null);
-        //token = new Token(JsonParser.parseString(response.body().string()).getAsJsonObject().get("token").getAsString());
-
-        try {
-            token = GSON.fromJson(response.body().string(), Token.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        token = loginGetToken();
     }
 
     @Test
