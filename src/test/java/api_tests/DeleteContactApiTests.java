@@ -13,22 +13,28 @@ import utils.ILogin;
 import java.io.IOException;
 import java.util.List;
 
+import static utils.ContactFactory.positiveContact;
+
 public class DeleteContactApiTests implements BaseApi, ILogin {
     Token token;
     List<Contact> contactList;
     Response response;
+    Contact contact;
     SoftAssert softAssert = new SoftAssert();
 
     @BeforeClass
     public void login() {
         token = loginGetToken();
+        contact = positiveContact();
+        getResponse(ADD_CONTACT_URL, "POST", contact, token);
         response = getResponse(GET_ALL_CONTACTS_URL, "GET", null, token);
         contactList = getContactList();
     }
 
     @Test
     public void DeleteContactPositiveApiTest() {
-        String contactId = contactList.get(contactList.size() - 1).getId();
+        String contactId = contactList.stream().filter(c -> c.getEmail()
+                .equals(contact.getEmail())).findFirst().get().getId();
         response = getResponse(DELETE_CONTACT_URL + contactId, "DELETE", null, token);
         softAssert.assertEquals(response.code(), 200, "Wrong response code");
         response = getResponse(GET_ALL_CONTACTS_URL, "GET", null, token);
