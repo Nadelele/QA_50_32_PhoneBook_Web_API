@@ -81,7 +81,7 @@ public class AddContactApiTests implements BaseApi, ILogin {
     @Test
     public void addNewContactNegativeApiTest_Wrong_MediaType() {
         Contact contact = positiveContact();
-        Response response = getResponse(REGISTRATION_URL, "POST", contact.getName(), token);
+        Response response = getResponse(ADD_CONTACT_URL, "POST", contact.getName(), token);
         errorMessage = getErrorMessage(response);
         softAssert.assertEquals(response.code(), 400, "Wrong status code");
         softAssert.assertEquals(errorMessage.getError(), "Bad Request",
